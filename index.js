@@ -177,7 +177,7 @@ class SvgUri extends Component{
       return <G key={i} {...componentAtts}>{childs}</G>;
     case 'path':
       componentAtts = this.obtainComponentAtts(node, PATH_ATTS);
-      return <Path key={i} {...componentAtts}>{childs}</Path>;
+      return <Path key={i} {...componentAtts} fill={this.props.fill}>{childs}</Path>;
     case 'circle':
       componentAtts = this.obtainComponentAtts(node, CIRCLE_ATTS);
       return <Circle key={i} {...componentAtts}>{childs}</Circle>;
@@ -188,6 +188,9 @@ class SvgUri extends Component{
       componentAtts = this.obtainComponentAtts(node, LINE_ATTS);
       return <Line key={i} {...componentAtts}>{childs}</Line>;
     case 'defs':
+        if(typeof(childs[0]) == 'string') {
+            delete childs[0]
+        }
       return <Defs key={i}>{childs}</Defs>;
     case 'linearGradient':
       componentAtts = this.obtainComponentAtts(node, LINEARG_ATTS);
