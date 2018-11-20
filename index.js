@@ -291,9 +291,18 @@ class SvgUri extends Component{
         (this.state.svgXmlData.indexOf("</svg>") + 6)
       ).replace(/<!-(.*?)->/g, '');
 
-      const doc = new xmldom.DOMParser().parseFromString(inputSVG);
-
-      const rootSVG = this.inspectNode(doc.childNodes[0]);
+      if(inputSVG) {
+        const doc = new xmldom.DOMParser().parseFromString(inputSVG);
+        if(doc) {
+          const rootSVG = this.inspectNode(doc.childNodes[0]);
+          return(
+              <View style={this.props.style}>
+                {rootSVG}
+              </View>
+          );
+        }
+      }
+      return null;
 
       return(
           <View style={this.props.style}>
@@ -301,7 +310,7 @@ class SvgUri extends Component{
           </View>
       );
     } catch(e){
-      console.error("ERROR SVG", e);
+      console.log("ERROR SVG", e);
       return null;
     }
   }
